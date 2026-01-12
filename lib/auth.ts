@@ -18,7 +18,7 @@ export const auth = betterAuth({
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      domain: process.env.COOKIE_DOMAIN || ".baiki.test",
+      domain: process.env.COOKIE_DOMAIN || ".localhost:3000",
     },
   },
   trustedOrigins: ["http://localhost:3000", "http://baiki.test"],

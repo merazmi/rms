@@ -5,7 +5,7 @@ import { TenantDto } from "./tenant.model";
 export const tenantController = new Elysia({ prefix: "/tenants" })
   .get("/", async () => await TenantService.listTenants())
   .post("/", async ({ body }) => await TenantService.createTenant(body), {
-    body: TenantDto.body,
+    body: TenantDto.tenantBody,
     auth: true,
   })
   .get(

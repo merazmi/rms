@@ -2,14 +2,14 @@ import { auth } from "@/lib/auth";
 import { AuthSignInBody, AuthSignUpBody } from "./auth.model";
 
 export abstract class AuthService {
-  static async signUp(data: AuthSignUpBody): Promise<Response> {
+  static async signUp(data: AuthSignUpBody) {
     const response = await auth.api.signUpEmail({
       body: {
         name: data.name,
         email: data.email,
         password: data.password,
       },
-      asResponse: true,
+      asResponse: data.asResponse ?? false,
     });
     return response;
   }

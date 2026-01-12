@@ -1,25 +1,26 @@
-import { t } from "elysia";
+import { z } from "zod";
+import { tenantStatus, tenantType } from "@/db/schema/tenant";
 
 export const TenantDto = {
-  full: t.Object({
-    id: t.String(),
-    slug: t.String(),
-    name: t.String(),
-    status: t.String(),
-    type: t.String(),
-    createdBy: t.String(),
-    createdAt: t.String({ format: "date-time" }),
-    onboardedAt: t.Nullable(t.String({ format: "date-time" })),
-    updatedAt: t.String({ format: "date-time" }),
+  tenantBody: z.object({
+    slug: z.string(),
+    name: z.string(),
+    type: z.enum(tenantType).optional(),
+    status: z.enum(tenantStatus).optional(),
+    createdBy: z.string(),
   }),
-  body: t.Object({
-    slug: t.String(),
-    name: t.String(),
-    type: t.Optional(t.String()),
-    status: t.Optional(t.String()),
-    createdBy: t.String(),
+  tenantResponse: z.object({
+    id: z.string(),
+    slug: z.string(),
+    name: z.string(),
+    status: z.string(),
+    type: z.string(),
+    createdBy: z.string(),
+    createdAt: z.string(),
+    onboardedAt: z.string().nullable(),
+    updatedAt: z.string(),
   }),
 };
 
-export type Tenant = typeof TenantDto.full.static;
-export type TenantBody = typeof TenantDto.body.static;
+export type TenantBody = z.infer<typeof TenantDto.tenantBody>;
+export type TenantResponse = z.infer<typeof TenantDto.tenantResponse>;

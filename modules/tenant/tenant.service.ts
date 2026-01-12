@@ -1,10 +1,10 @@
 import { db } from "@/db/drizzle";
-import { Tenant, TenantBody } from "./tenant.model";
+import { TenantBody, TenantResponse } from "./tenant.model";
 import { tenantTable } from "@/db/schema/tenant";
 import { eq } from "drizzle-orm";
 
 export abstract class TenantService {
-  static async listTenants(): Promise<Tenant[]> {
+  static async listTenants(): Promise<TenantResponse[]> {
     const tenants = await db.select().from(tenantTable);
 
     return tenants.map((tenant) => ({
@@ -20,15 +20,15 @@ export abstract class TenantService {
     }));
   }
 
-  static async createTenant(data: TenantBody): Promise<Tenant> {
+  static async createTenant(body: TenantBody): Promise<TenantResponse> {
     const [newTenant] = await db
       .insert(tenantTable)
       .values({
-        name: data.name,
-        slug: data.slug,
-        type: data.type,
-        status: data.status,
-        createdBy: data.createdBy,
+        name: body.name,
+        slug: body.slug,
+        type: body.type,
+        status: body.status,
+        createdBy: body.createdBy,
       })
       .returning();
 
@@ -47,7 +47,7 @@ export abstract class TenantService {
     };
   }
 
-  static async getTenantBySlug(slug: string): Promise<Tenant> {
+  static async getTenantBySlug(slug: string): Promise<TenantResponse> {
     const tenant = await db
       .select()
       .from(tenantTable)
@@ -67,7 +67,7 @@ export abstract class TenantService {
     };
   }
 
-  static async getTenantById(id: string): Promise<Tenant> {
+  static async getTenantById(id: string): Promise<TenantResponse> {
     const tenant = await db
       .select()
       .from(tenantTable)

@@ -1,11 +1,19 @@
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { tenantStaffTable } from "./tenant-staff";
+
+export const tenantStatus = ["active", "suspended", "archived"] as const;
+export const tenantStatusEnum = pgEnum("tenant_status", tenantStatus);
+
+export const tenantType = ["customer", "demo", "internal"] as const;
+export const tenantTypeEnum = pgEnum("tenant_type", tenantType);
 
 export const tenantTable = pgTable("tenant", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
-  status: text("status").notNull().default("ACTIVE"),
-  type: text("type").notNull().default("CUSTOMER"),
+  status: tenantStatusEnum("status").notNull().default("active"),
+  type: tenantTypeEnum("type").notNull().default("customer"),
   onboardedAt: timestamp("onboarded_at"),
   createdBy: text("created_by").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -15,3 +23,7 @@ export const tenantTable = pgTable("tenant", {
     .notNull(),
   archivedAt: timestamp("archived_at"),
 });
+
+export const tenantRelations = relations(tenantTable, ({ many }) => ({
+  staff: many(tenantStaffTable), // 1 tenant has many staff members
+}));

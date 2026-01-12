@@ -21,6 +21,16 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: "host",
+            value: `api.${rootDomain}`,
+          },
+        ],
+        destination: "/api/:path*",
+      },
+      {
+        source: "/:path((?!_next|_static|_vercel|_.well-known|.*\\.\\w+$).*)*",
+        has: [
+          {
+            type: "host",
             value: `${rootDomain}`,
           },
         ],

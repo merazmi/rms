@@ -1,34 +1,35 @@
-import { t } from "elysia";
+import { z } from "zod";
 
 export const AuthDto = {
-  signUpBody: t.Object({
-    name: t.String({ minLength: 2 }),
-    email: t.String({ format: "email" }),
-    password: t.String({ minLength: 6 }),
+  signUpBody: z.object({
+    name: z.string().min(2),
+    email: z.email(),
+    password: z.string().min(6),
+    asResponse: z.optional(z.boolean()),
   }),
-  signUpResponse: t.Object({
-    id: t.String(),
-    name: t.String(),
-    email: t.String({ format: "email" }),
-    token: t.Optional(t.String()),
-    createdAt: t.String({ format: "date-time" }),
-    updatedAt: t.String({ format: "date-time" }),
+  signUpResponse: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.email(),
+    token: z.optional(z.string()),
+    createdAt: z.date(),
+    updatedAt: z.date(),
   }),
-  signInBody: t.Object({
-    email: t.String({ format: "email" }),
-    password: t.String({ minLength: 6 }),
+  signInBody: z.object({
+    email: z.email(),
+    password: z.string().min(6),
   }),
-  signInResponse: t.Object({
-    id: t.String(),
-    name: t.String(),
-    email: t.String({ format: "email" }),
-    token: t.Optional(t.String()),
-    createdAt: t.String({ format: "date-time" }),
-    updatedAt: t.String({ format: "date-time" }),
+  signInResponse: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.email(),
+    token: z.optional(z.string()),
+    createdAt: z.date(),
+    updatedAt: z.date(),
   }),
 };
 
-export type AuthSignUpBody = typeof AuthDto.signUpBody.static;
-export type SignUpResponse = typeof AuthDto.signUpResponse.static;
-export type AuthSignInBody = typeof AuthDto.signInBody.static;
-export type SignInResponse = typeof AuthDto.signInResponse.static;
+export type AuthSignUpBody = z.infer<typeof AuthDto.signUpBody>;
+export type SignUpResponse = z.infer<typeof AuthDto.signUpResponse>;
+export type AuthSignInBody = z.infer<typeof AuthDto.signInBody>;
+export type SignInResponse = z.infer<typeof AuthDto.signInResponse>;

@@ -25,7 +25,7 @@ export async function generateUniqueSlug(name: string): Promise<string> {
       .where(eq(tenantTable.slug, slug))
       .limit(1);
 
-    if (!existing) {
+    if (existing.length === 0) {
       // slug is unique
       return slug;
     }
