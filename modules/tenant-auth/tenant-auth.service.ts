@@ -1,9 +1,9 @@
 import { generateUniqueSlug } from "@/lib/server-utils";
-import { AuthService } from "../auth/auth.service";
-import { TenantSignUpBody, TenantSignUpResponse } from "./tenant-auth.model";
 import { NotFoundError } from "elysia";
-import { TenantService } from "../tenant/tenant.service";
+import { AuthService } from "../auth/auth.service";
 import { TenantStaffService } from "../tenant-staff/tenant-staff.service";
+import { TenantService } from "../tenant/tenant.service";
+import { TenantSignUpBody, TenantSignUpResponse } from "./tenant-auth.model";
 
 export abstract class TenantAuthService {
   static async tenantSignUp(

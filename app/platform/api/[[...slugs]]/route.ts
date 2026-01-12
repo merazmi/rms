@@ -4,7 +4,7 @@ import { tenantAuthController } from "@/modules/tenant-auth/tenant-auth.controll
 import { tenantController } from "@/modules/tenant/tenant.controller";
 import { Elysia } from "elysia";
 
-export const app = new Elysia()
+export const app = new Elysia({ prefix: "/api" })
   .mount("/", auth.handler)
   .get("/health", () => "OK")
   .use(authController)
