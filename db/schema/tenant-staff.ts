@@ -40,7 +40,7 @@ export const tenantStaffRelations = relations(tenantStaffTable, ({ one }) => ({
     fields: [tenantStaffTable.userId],
     references: [user.id],
   }),
-  tenantTable: one(tenantTable, {
+  tenant: one(tenantTable, {
     fields: [tenantStaffTable.tenantId],
     references: [tenantTable.id],
   }),

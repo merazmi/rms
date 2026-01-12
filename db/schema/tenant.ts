@@ -25,5 +25,5 @@ export const tenantTable = pgTable("tenant", {
 });
 
 export const tenantRelations = relations(tenantTable, ({ many }) => ({
-  staff: many(tenantStaffTable), // 1 tenant has many staff members
+  tenantStaff: many(tenantStaffTable), // 1 tenant has many staff members
 }));
