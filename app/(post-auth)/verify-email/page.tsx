@@ -12,7 +12,7 @@ import Link from "next/link";
 export default function VerifyEmailPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-md">
         <Card>
           <CardHeader className="text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
@@ -40,14 +40,13 @@ export default function VerifyEmailPage() {
           <CardContent className="space-y-4">
             <div className="bg-muted rounded-lg p-4 text-center text-sm">
               <p className="text-muted-foreground">
-                Didn&apos;t receive the email? <br />
-                Check your spam folder <br /> or
+                Didn&apos;t receive the email? Check your spam folder or
               </p>
               <Button variant="link" className="p-0 h-auto font-semibold">
                 Resend verification email
               </Button>
             </div>
-            <Button variant="outline" className="w-full" asChild>
+            <Button size="lg" variant="outline" className="w-full" asChild>
               <Link href="/login">Back to Login</Link>
             </Button>
           </CardContent>
