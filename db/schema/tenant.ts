@@ -1,6 +1,4 @@
-import { relations } from "drizzle-orm";
 import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { tenantStaffTable } from "./tenant-staff";
 
 export const tenantStatus = ["active", "suspended", "archived"] as const;
 export const tenantStatusEnum = pgEnum("tenant_status", tenantStatus);
@@ -23,7 +21,3 @@ export const tenantTable = pgTable("tenant", {
     .notNull(),
   archivedAt: timestamp("archived_at"),
 });
-
-export const tenantRelations = relations(tenantTable, ({ many }) => ({
-  tenantStaff: many(tenantStaffTable), // 1 tenant has many staff members
-}));
