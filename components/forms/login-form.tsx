@@ -44,11 +44,12 @@ export const LoginForm = () => {
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setError("");
     const result = await signInEmailAction(data);
+
     if (result.success) {
       form.reset();
       redirect("/app");
     } else {
-      setError("An unknown error occurred.");
+      setError(result.error.message || "An unexpected error occurred.");
     }
   };
 
@@ -82,8 +83,7 @@ export const LoginForm = () => {
           <AlertTitle>Failed to login.</AlertTitle>
           <AlertDescription>
             <ul className="list-inside list-disc text-sm">
-              <li>Please check your information and try again.</li>
-              <li>Or, please contact support if the issue persists.</li>
+              <li>{error}</li>
             </ul>
           </AlertDescription>
         </Alert>

@@ -32,6 +32,15 @@ export abstract class AuthService {
       },
       asResponse: true,
     });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new ApiError(
+        response.status,
+        errorData.message || "Signup failed",
+        errorData.code,
+        errorData.items
+      );
+    }
     return response;
   }
 
