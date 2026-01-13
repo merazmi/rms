@@ -15,7 +15,12 @@ export default function AuthLayout({
             <CardContent className="grid p-0 md:grid-cols-2">
               {children}{" "}
               <div className="bg-muted relative hidden md:block">
-                <Image src="/images/bg-auth.webp" alt="Image" fill />
+                <Image
+                  src="/images/bg-auth.webp"
+                  alt="Image"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </CardContent>
           </Card>
