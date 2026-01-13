@@ -21,14 +21,23 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     sendOnSignIn: true,
     sendVerificationEmail: async ({ token, url, user }) => {
+      const verificationUrl = new URL(url);
+
+      verificationUrl.searchParams.set(
+        "callbackURL",
+        process.env.EMAIL_VERIFICATION_CALLBACK_URL ||
+          "http://localhost:3000/login?verified=true"
+      );
+
       void sendEmail({
         emailTo: user.email,
         subject: "Verify your email address",
-        content: EmailVerificationEmail({ token, url, user }),
+        content: EmailVerificationEmail({
+          token,
+          url: verificationUrl.toString(),
+          user,
+        }),
       });
-    },
-    afterEmailVerification: async (user) => {
-      console.log(`User with email ${user.email} has verified their email.`);
     },
   },
   socialProviders: {

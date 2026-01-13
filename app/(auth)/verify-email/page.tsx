@@ -48,7 +48,7 @@ export default function VerifyEmailPage() {
               </Button>
             </div>
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/signin">Back to Sign In</Link>
+              <Link href="/login">Back to Login</Link>
             </Button>
           </CardContent>
         </Card>

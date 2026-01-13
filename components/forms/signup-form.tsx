@@ -237,7 +237,7 @@ export const SignupForm = () => {
           </Button>
         </Field>
         <FieldDescription className="text-center">
-          Already have an account? <Link href="/signin">Sign in</Link>
+          Already have an account? <Link href="/login">Login</Link>
         </FieldDescription>
       </FieldGroup>
     </form>
