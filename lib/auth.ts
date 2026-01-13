@@ -27,6 +27,16 @@ export const auth = betterAuth({
         content: EmailVerificationEmail({ token, url, user }),
       });
     },
+    afterEmailVerification: async (user) => {
+      console.log(`User with email ${user.email} has verified their email.`);
+    },
+  },
+  socialProviders: {
+    google: {
+      prompt: "select_account",
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    },
   },
   advanced: {
     crossSubDomainCookies: {

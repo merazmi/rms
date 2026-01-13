@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { AuthSignInBody, AuthSignUpBody } from "./auth.model";
+import { ApiError } from "@/lib/error/error";
 
 export abstract class AuthService {
   static async signUp(data: AuthSignUpBody) {
@@ -9,8 +10,17 @@ export abstract class AuthService {
         email: data.email,
         password: data.password,
       },
-      asResponse: data.asResponse ?? false,
+      asResponse: true,
     });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new ApiError(
+        response.status,
+        errorData.message || "Signup failed",
+        errorData.code,
+        errorData.items
+      );
+    }
     return response;
   }
 

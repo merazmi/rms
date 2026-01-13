@@ -1,10 +1,12 @@
 import { auth } from "@/lib/auth";
+import { ApiError } from "@/lib/error/error";
 import { authController } from "@/modules/auth/auth.controller";
 import { tenantAuthController } from "@/modules/tenant-auth/tenant-auth.controller";
 import { tenantController } from "@/modules/tenant/tenant.controller";
 import { Elysia } from "elysia";
 
 export const app = new Elysia({ prefix: "/api" })
+  .error({ API_ERROR: ApiError })
   .mount("/", auth.handler)
   .get("/health", () => "OK")
   .use(authController)

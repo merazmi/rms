@@ -5,7 +5,7 @@ import { AuthSignInBody, AuthSignUpBody } from "./auth.model";
 
 export async function signUpEmailAction(data: AuthSignUpBody) {
   try {
-    const result = await api.auth.signup.post(data);
+    const result = await api.auth.signup.post({ ...data, asResponse: true });
 
     if (result.error) {
       return { success: false, error: result.error };
