@@ -1,0 +1,64 @@
+import {
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { useStepper } from "@/components/ui/stepper";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export function NavOnboardingStepper() {
+  const { steps, currentStep, goToStep, isStepCompleted } = useStepper();
+
+  return (
+    <SidebarGroup className="border-b">
+      <SidebarGroupLabel>Onboarding</SidebarGroupLabel>
+      <SidebarMenu>
+        {steps.map((step, index) => {
+          const isCompleted = isStepCompleted(index);
+          const isCurrent = index === currentStep;
+          const isAccessible = index <= currentStep || isCompleted;
+          const canNavigate =
+            isAccessible && (index < currentStep || isCompleted);
+
+          return (
+            <SidebarMenuItem key={step.id}>
+              <SidebarMenuButton
+                onClick={() => canNavigate && goToStep(index)}
+                isActive={isCurrent}
+                disabled={!isAccessible}
+                className={cn(
+                  !isAccessible && "opacity-50 cursor-not-allowed",
+                  canNavigate && "cursor-pointer"
+                )}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2">
+                    {step.icon ? (
+                      step.icon
+                    ) : (
+                      <div
+                        className={cn(
+                          "flex h-5 w-5 items-center justify-center rounded-full border-2 text-xs font-semibold",
+                          isCurrent
+                            ? "border-primary text-primary"
+                            : "border-muted-foreground text-muted-foreground"
+                        )}
+                      >
+                        {index + 1}
+                      </div>
+                    )}
+                    <span>{step.label}</span>
+                  </div>
+                  {isCompleted && <Check className="h-3 w-3" />}
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          );
+        })}
+      </SidebarMenu>
+    </SidebarGroup>
+  );
+}

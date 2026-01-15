@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/layouts/tenant-app-layout/nav-main";
-import { NavProjects } from "@/components/layouts/tenant-app-layout/nav-projects";
+// import { NavProjects } from "@/components/layouts/tenant-app-layout/nav-projects";
 import { NavUser } from "@/components/layouts/tenant-app-layout/nav-user";
 import { TeamSwitcher } from "@/components/layouts/tenant-app-layout/team-switcher";
 import {
@@ -25,6 +25,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { NavOnboardingStepper } from "./nav-onboarding-stepper";
 
 // This is sample data.
 const data = {
@@ -55,7 +56,7 @@ const data = {
       title: "Playground",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
+      disabled: true,
       items: [
         {
           title: "History",
@@ -75,6 +76,8 @@ const data = {
       title: "Models",
       url: "#",
       icon: Bot,
+      disabled: true,
+
       items: [
         {
           title: "Genesis",
@@ -94,6 +97,8 @@ const data = {
       title: "Documentation",
       url: "#",
       icon: BookOpen,
+      disabled: true,
+
       items: [
         {
           title: "Introduction",
@@ -117,6 +122,8 @@ const data = {
       title: "Settings",
       url: "#",
       icon: Settings2,
+      disabled: true,
+
       items: [
         {
           title: "General",
@@ -163,8 +170,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
+        <NavOnboardingStepper />
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

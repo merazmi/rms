@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight, LockIcon, type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,
@@ -26,6 +26,7 @@ export function NavMain({
     url: string;
     icon?: LucideIcon;
     isActive?: boolean;
+    disabled?: boolean;
     items?: {
       title: string;
       url: string;
@@ -45,10 +46,16 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  disabled={item.disabled}
+                >
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  <span className="flex ml-auto items-center gap-1">
+                    {item.disabled && <LockIcon />}
+                    <ChevronRight className=" transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </span>
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
