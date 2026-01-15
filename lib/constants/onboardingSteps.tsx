@@ -37,8 +37,8 @@ export const onboardingSteps: OnboardingStep[] = [
   },
   {
     id: ONBOARDING_STEP_IDS.HQ_OUTLET_DETAILS,
-    label: "HQ Outlet Details",
-    description: "Set up your headquarters outlet",
+    label: "HQ Branch Details",
+    description: "Set up your headquarters branch information",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -12,6 +12,10 @@ import { cn } from "@/lib/utils";
 export function NavOnboardingStepper() {
   const { steps, currentStep, goToStep, isStepCompleted } = useStepper();
 
+  const allStepsCompleted = steps.every((_, index) => isStepCompleted(index));
+
+  if (allStepsCompleted) return null;
+
   return (
     <SidebarGroup className="border-b">
       <SidebarGroupLabel>Onboarding</SidebarGroupLabel>

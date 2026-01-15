@@ -5,6 +5,7 @@ import { OnboardingBusinessDetailForm } from "@/components/forms/onboarding-busi
 import { OnboardingHQOutletForm } from "@/components/forms/onboarding-hq-outlet-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Stepper, StepperContent, useStepper } from "../ui/stepper";
+import { OnboardingInviteStaffForm } from "../forms/onboarding-invite-staff-form";
 
 const RenderStepContent = ({
   stepId,
@@ -17,7 +18,7 @@ const RenderStepContent = ({
     case ONBOARDING_STEP_IDS.HQ_OUTLET_DETAILS:
       return <OnboardingHQOutletForm />;
     case ONBOARDING_STEP_IDS.INVITE_TEAM_MEMBERS:
-      return <div>Step 3 Content</div>;
+      return <OnboardingInviteStaffForm />;
     default:
       return <div>Unknown Step</div>;
   }

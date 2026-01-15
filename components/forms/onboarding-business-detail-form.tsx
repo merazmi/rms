@@ -40,22 +40,22 @@ export const OnboardingBusinessDetailForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      businessName: "",
-      ssmNumber: "",
+      businessName: "ABC Gadgets Sdn Bhd",
+      ssmNumber: "202401012345",
     },
     mode: "onChange",
     reValidateMode: "onChange",
   });
+
+  useEffect(() => {
+    if (form.formState.isValid) completeStep();
+  }, [form.formState.isValid, completeStep]);
 
   // TODO: Integrate with backend API
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("Form submitted:", data);
     nextStep();
   };
-
-  useEffect(() => {
-    if (form.formState.isValid) completeStep();
-  }, [form.formState.isValid, completeStep]);
 
   const step =
     steps[currentStep].id === ONBOARDING_STEP_IDS.BUSINESS_DETAILS &&
