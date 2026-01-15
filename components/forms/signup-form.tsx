@@ -21,19 +21,11 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { SocialLoginForm } from "./social-login-form";
 
-const formSchema = z
-  .object({
-    name: z.string().min(2, "Name must be at least 2 characters long"),
-    email: z.email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters long"),
-    confirmPassword: z
-      .string()
-      .min(8, "Confirm Password must be at least 8 characters long"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters long"),
+  email: z.email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
 
 export const SignupForm = () => {
   const [error, setError] = useState<string>("");
@@ -43,7 +35,6 @@ export const SignupForm = () => {
       name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
     reValidateMode: "onChange",
   });
@@ -118,7 +109,7 @@ export const SignupForm = () => {
                 placeholder="owner@yourbusiness.com"
                 aria-invalid={fieldState.invalid}
               />
-              <FieldDescription>
+              <FieldDescription className="text-xs">
                 This will be your main admin account.
               </FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -126,55 +117,27 @@ export const SignupForm = () => {
           )}
         />
 
-        <Field>
-          <Field className="grid grid-cols-2 gap-4">
-            <Controller
-              name="password"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-form-password">
-                    Password
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="signup-form-password"
-                    type="password"
-                    placeholder="Enter your password"
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="confirmPassword"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-form-confirm-password">
-                    Confirm Password
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="signup-form-confirm-password"
-                    type="password"
-                    placeholder="Enter your password"
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </Field>
-          <FieldDescription>
-            Must be at least 8 characters long.
-          </FieldDescription>
-        </Field>
+        <Controller
+          name="password"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="signup-form-password">Password</FieldLabel>
+              <Input
+                {...field}
+                id="signup-form-password"
+                type="password"
+                placeholder="Enter your password"
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldDescription className="text-xs">
+                Must be at least 8 characters long.
+              </FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
         <Field>
           <Button size="lg" type="submit">
             Get started with Baiki

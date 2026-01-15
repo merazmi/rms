@@ -31,7 +31,8 @@ export function NavOnboardingStepper() {
                 disabled={!isAccessible}
                 className={cn(
                   !isAccessible && "opacity-50 cursor-not-allowed",
-                  canNavigate && "cursor-pointer"
+                  canNavigate && "cursor-pointer",
+                  "relative"
                 )}
               >
                 <div className="flex items-center justify-between w-full">
@@ -52,9 +53,13 @@ export function NavOnboardingStepper() {
                     )}
                     <span>{step.label}</span>
                   </div>
-                  {isCompleted && <Check className="h-3 w-3" />}
                 </div>
               </SidebarMenuButton>
+              {isCompleted && (
+                <div className="absolute top-1 left-4 bg-green-500 rounded-full text-white p-0.5">
+                  <Check className="h-2 w-2" />
+                </div>
+              )}
             </SidebarMenuItem>
           );
         })}

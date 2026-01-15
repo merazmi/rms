@@ -296,11 +296,6 @@ export function Stepper({
                   >
                     {step.label}
                   </div>
-                  {step.description && (
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {step.description}
-                    </div>
-                  )}
                 </div>
               </div>
               {index < steps.length - 1 && (

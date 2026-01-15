@@ -1,34 +1,36 @@
 "use client";
 
-import {
-  Stepper,
-  StepperActions,
-  StepperContent,
-  useStepper,
-} from "../ui/stepper";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
+import { ONBOARDING_STEP_IDS } from "@/lib/constants/onboardingSteps";
+import { OnboardingBusinessDetailForm } from "@/components/forms/onboarding-business-detail-form";
+import { OnboardingHQOutletForm } from "@/components/forms/onboarding-hq-outlet-form";
+import { Card, CardContent } from "@/components/ui/card";
+import { Stepper, StepperContent, useStepper } from "../ui/stepper";
+
+const RenderStepContent = ({
+  stepId,
+}: {
+  stepId: (typeof ONBOARDING_STEP_IDS)[keyof typeof ONBOARDING_STEP_IDS];
+}) => {
+  switch (stepId) {
+    case ONBOARDING_STEP_IDS.BUSINESS_DETAILS:
+      return <OnboardingBusinessDetailForm />;
+    case ONBOARDING_STEP_IDS.HQ_OUTLET_DETAILS:
+      return <OnboardingHQOutletForm />;
+    case ONBOARDING_STEP_IDS.INVITE_TEAM_MEMBERS:
+      return <div>Step 3 Content</div>;
+    default:
+      return <div>Unknown Step</div>;
+  }
+};
 
 export const TenantOnboardingStepper = () => {
-  const {
-    steps,
-    currentStep,
-    goToStep,
-    nextStep,
-    previousStep,
-    canGoBack,
-    canGoNext,
-    completeStep,
-  } = useStepper();
+  const { steps, currentStep, goToStep } = useStepper();
 
   if (!steps || steps.length === 0) return null;
   if (!steps[currentStep]) return null;
 
-  // Example: Call completeStep() when form is valid or task is done
-  const handleComplete = () => {
-    // Add your validation logic here
-    completeStep(); // Mark current step as completed
-  };
+  const stepId = steps[currentStep]
+    .id as (typeof ONBOARDING_STEP_IDS)[keyof typeof ONBOARDING_STEP_IDS];
 
   return (
     <div className="max-w-xl w-full mt-4">
@@ -40,34 +42,11 @@ export const TenantOnboardingStepper = () => {
       />
       <StepperContent>
         <Card className="border">
-          <CardContent className="pt-6">
-            <div>
-              <h3 className="text-lg font-semibold mb-2">
-                {steps[currentStep].label}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {steps[currentStep].description}
-              </p>
-              {/* Your form or content here */}
-              <Button
-                onClick={handleComplete}
-                variant="secondary"
-                className="mt-4"
-              >
-                Mark as Complete
-              </Button>
-            </div>
+          <CardContent>
+            <RenderStepContent stepId={stepId} />
           </CardContent>
         </Card>
       </StepperContent>
-      <StepperActions>
-        <Button onClick={previousStep} disabled={!canGoBack} variant="outline">
-          Back
-        </Button>
-        <Button onClick={nextStep} disabled={!canGoNext}>
-          Next
-        </Button>
-      </StepperActions>
     </div>
   );
 };

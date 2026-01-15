@@ -102,7 +102,7 @@ export const LoginForm = () => {
                 placeholder="you@yourbusiness.com"
                 aria-invalid={fieldState.invalid}
               />
-              <FieldDescription>
+              <FieldDescription className="text-xs">
                 Use the email you registered your business with.
               </FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
