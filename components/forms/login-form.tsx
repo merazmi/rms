@@ -28,6 +28,7 @@ const formSchema = z.object({
 
 export const LoginForm = () => {
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
   const isVerified = searchParams.get("verified") === "true";
@@ -43,13 +44,18 @@ export const LoginForm = () => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setError("");
-    const result = await signInEmailAction(data);
+    setIsLoading(true);
+    try {
+      const result = await signInEmailAction(data);
 
-    if (result.success) {
-      form.reset();
-      redirect("/app");
-    } else {
-      setError(result.error.message || "An unexpected error occurred.");
+      if (result.success) {
+        form.reset();
+        redirect("/app");
+      } else {
+        setError(result.error.message || "An unexpected error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,6 +107,7 @@ export const LoginForm = () => {
                 type="email"
                 placeholder="you@yourbusiness.com"
                 aria-invalid={fieldState.invalid}
+                disabled={isLoading}
               />
               <FieldDescription className="text-xs">
                 Use the email you registered your business with.
@@ -122,14 +129,15 @@ export const LoginForm = () => {
                 type="password"
                 placeholder="Enter your password"
                 aria-invalid={fieldState.invalid}
+                disabled={isLoading}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
         <Field>
-          <Button size="lg" type="submit">
-            Log in to Dashboard
+          <Button size="lg" type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Log in to Dashboard"}
           </Button>
         </Field>
         <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card mt-0.5">

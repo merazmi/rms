@@ -29,6 +29,7 @@ const formSchema = z.object({
 
 export const SignupForm = () => {
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,12 +42,17 @@ export const SignupForm = () => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setError("");
-    const result = await signUpEmailAction(data);
-    if (result.success) {
-      form.reset();
-      redirect("/verify-email");
-    } else {
-      setError("An unknown error occurred.");
+    setIsLoading(true);
+    try {
+      const result = await signUpEmailAction(data);
+      if (result.success) {
+        form.reset();
+        redirect("/verify-email");
+      } else {
+        setError("An unknown error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -91,6 +97,7 @@ export const SignupForm = () => {
                 type="text"
                 placeholder="John Doe"
                 aria-invalid={fieldState.invalid}
+                disabled={isLoading}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -108,6 +115,7 @@ export const SignupForm = () => {
                 type="email"
                 placeholder="owner@yourbusiness.com"
                 aria-invalid={fieldState.invalid}
+                disabled={isLoading}
               />
               <FieldDescription className="text-xs">
                 This will be your main admin account.
@@ -129,6 +137,7 @@ export const SignupForm = () => {
                 type="password"
                 placeholder="Enter your password"
                 aria-invalid={fieldState.invalid}
+                disabled={isLoading}
               />
               <FieldDescription className="text-xs">
                 Must be at least 8 characters long.
@@ -139,8 +148,8 @@ export const SignupForm = () => {
         />
 
         <Field>
-          <Button size="lg" type="submit">
-            Get started with Baiki
+          <Button size="lg" type="submit" disabled={isLoading}>
+            {isLoading ? "Creating account..." : "Get started with Baiki"}
           </Button>
         </Field>
         <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card mt-0.5">
