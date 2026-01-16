@@ -45,16 +45,25 @@ export const LoginForm = () => {
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setError("");
     setIsLoading(true);
+
     try {
       const result = await signInEmailAction(data);
 
       if (result.success) {
         form.reset();
+        // Keep loading state true during redirect
         redirect("/app");
       } else {
         setError(result.error.message || "An unexpected error occurred.");
+        setIsLoading(false);
       }
-    } finally {
+    } catch (error) {
+      // Re-throw redirect errors (Next.js uses these for navigation)
+      if (error instanceof Error && error.message.includes("NEXT_REDIRECT")) {
+        throw error;
+      }
+      // Handle other errors
+      setError("An unexpected error occurred.");
       setIsLoading(false);
     }
   };
