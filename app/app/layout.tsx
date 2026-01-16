@@ -3,12 +3,14 @@ import { AppSidebar } from "@/components/layouts/tenant-app-layout/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { StepperProvider } from "@/components/ui/stepper";
 import { onboardingSteps } from "@/lib/constants/onboardingSteps";
+import { requireAuth } from "@/lib/server-auth";
 
-export default function TenantAppLayout({
+export default async function TenantAppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  await requireAuth();
   return (
     <StepperProvider initialSteps={onboardingSteps}>
       <SidebarProvider>

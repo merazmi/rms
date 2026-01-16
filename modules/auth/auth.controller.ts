@@ -11,4 +11,5 @@ export const authController = new Elysia({ prefix: "/auth" })
   .post("/signin", async ({ body }) => await AuthService.signIn(body), {
     body: AuthDto.signInBody,
   })
-  .post("/signout", async () => await AuthService.signOut());
+  .post("/signout", async () => await AuthService.signOut())
+  .get("/session", async ({ request }) => await AuthService.getSession(request));

@@ -51,4 +51,16 @@ export abstract class AuthService {
     });
     return response;
   }
+
+  static async getSession(request: Request) {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+    
+    if (!session) {
+      throw new ApiError(401, "Unauthorized", "UNAUTHORIZED");
+    }
+    
+    return session;
+  }
 }

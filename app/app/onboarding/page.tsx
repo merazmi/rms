@@ -1,6 +1,9 @@
 import { TenantOnboardingStepper } from "@/components/tenant/onboarding-stepper";
+// import { requireAuth } from "@/lib/server-auth";
 
-export default function TenantOnboardingPage() {
+export default async function TenantOnboardingPage() {
+  // const session = await requireAuth();
+
   return (
     <div className="flex items-center flex-col justify-center">
       <div className="mb-4 flex flex-col items-center text-center space-y-2">
