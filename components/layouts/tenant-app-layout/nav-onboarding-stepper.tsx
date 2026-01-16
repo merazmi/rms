@@ -8,6 +8,7 @@ import {
 import { useStepper } from "@/components/ui/stepper";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 export function NavOnboardingStepper() {
   const { steps, currentStep, goToStep, isStepCompleted } = useStepper();
@@ -30,7 +31,10 @@ export function NavOnboardingStepper() {
           return (
             <SidebarMenuItem key={step.id}>
               <SidebarMenuButton
-                onClick={() => canNavigate && goToStep(index)}
+                onClick={() => {
+                  if (canNavigate) goToStep(index);
+                  redirect("/app/onboarding");
+                }}
                 isActive={isCurrent}
                 disabled={!isAccessible}
                 className={cn(

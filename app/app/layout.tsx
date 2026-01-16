@@ -15,7 +15,7 @@ export default function TenantAppLayout({
         <AppSidebar />
         <SidebarInset>
           <AppHeader />
-          <div className="flex flex-1 flex-col gap-4 p-8 pt-8 max-w-7xl w-full mx-auto">
+          <div className="flex flex-1 flex-col gap-4 p-4 md:p-8 pt-8 max-w-7xl w-full mx-auto">
             {children}
           </div>
         </SidebarInset>

@@ -231,7 +231,7 @@ export function Stepper({
                 >
                   <div
                     className={cn(
-                      "text-sm font-medium",
+                      "text-xs md:text-sm font-medium",
                       isCurrent && "text-foreground",
                       isCompleted && "text-foreground",
                       !isCurrent && !isCompleted && "text-muted-foreground"
@@ -263,7 +263,7 @@ export function Stepper({
 
           return (
             <React.Fragment key={step.id}>
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-2 w-20 md:w-36">
                 <button
                   onClick={() => handleStepClick(index)}
                   disabled={!isClickable}
@@ -288,7 +288,7 @@ export function Stepper({
                 <div className="text-center">
                   <div
                     className={cn(
-                      "text-sm font-medium",
+                      "text-xs md:text-sm font-medium",
                       isCurrent && "text-foreground",
                       isCompleted && "text-foreground",
                       !isCurrent && !isCompleted && "text-muted-foreground"
