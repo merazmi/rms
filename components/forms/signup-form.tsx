@@ -44,13 +44,9 @@ export const SignupForm = () => {
     setError("");
     setIsLoading(true);
     const result = await signUpEmailAction(data);
-    if (result.success) {
-      form.reset();
-      redirect("/verify-email");
-    } else {
-      setError("An unknown error occurred.");
-      setIsLoading(false);
-    }
+    if (result.success) return redirect("/verify-email");
+    setError("An unknown error occurred.");
+    setIsLoading(false);
   };
 
   return (

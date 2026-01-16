@@ -47,13 +47,9 @@ export const LoginForm = () => {
     setIsLoading(true);
     const result = await signInEmailAction(data);
 
-    if (result.success) {
-      form.reset();
-      redirect("/app");
-    } else {
-      setError(result.error.message || "An unexpected error occurred.");
-      setIsLoading(false);
-    }
+    if (result.success) return redirect("/app");
+    setError(result.error.message || "An unexpected error occurred.");
+    setIsLoading(false);
   };
 
   return (
